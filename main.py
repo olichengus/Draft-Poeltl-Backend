@@ -28,6 +28,7 @@ def print_hi(name):
         #     # Inspect the first few rows of the averaged stats
         #     print(top_500_avg.head())
         print(draft_2023.get_data_frames()[0])
+        print("bruh")
     except Exception as e:
         print(f"An error occurred: {e}")
 
