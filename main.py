@@ -13,7 +13,7 @@ from nba_api.stats.endpoints import playercareerstats
 
 def print_hi(name):
     try:
-        draft_2023 = drafthistory.DraftHistory(league_id="00")
+        draft_2023 = drafthistory.DraftHistory(league_id="00",season_year_nullable="2021",round_num_nullable="1")
         #      # Pull data for the top 500 scorers
         #     top_500 = leagueleaders.LeagueLeaders(
         #         season='2023-24',
