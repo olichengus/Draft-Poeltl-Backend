@@ -7,27 +7,24 @@ import pandas as pd
 from nba_api.stats.endpoints import leagueleaders
 from nba_api.stats.endpoints import drafthistory
 from nba_api.stats.endpoints import playercareerstats
+from nba_api.stats.endpoints import playerindex
+import random
+
 
 # Anthony Davis
 
 
 def print_hi(name):
     try:
-        draft_2023 = drafthistory.DraftHistory(league_id="00",season_year_nullable="2021",round_num_nullable="1")
-        #      # Pull data for the top 500 scorers
-        #     top_500 = leagueleaders.LeagueLeaders(
-        #         season='2023-24',
-        #         season_type_all_star='Regular Season',
-        #         stat_category_abbreviation='PTS'
-        #     ).get_data_frames()[0][:500]
-        #
-        #     # Correct column names for grouping
-        #     avg_stats_columns = ['MIN', 'FGM', 'FGA', 'FTM', 'FTA', 'PTS', 'FG3M', 'FG3A']
-        #     top_500_avg = top_500.groupby(['PLAYER', 'PLAYER_ID'])[avg_stats_columns].mean()
-        #
-        #     # Inspect the first few rows of the averaged stats
-        #     print(top_500_avg.head())
-        print(draft_2023.get_data_frames()[0])
+        draft_2023 = drafthistory.DraftHistory(league_id="00",season_year_nullable=2010,round_num_nullable=1,overall_pick_nullable=1).get_data_frames()[0]
+        availableYears = [2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023]
+        lakers = playerindex.PlayerIndex(league_id="00",season="2023")
+        players_df = lakers.get_data_frames()[0]
+        year = random.choice(availableYears)
+        years_df = players_df[players_df["DRAFT_YEAR"] == year]
+        player_selection = years_df.sample()
+        print(player_selection)
+        print(draft_2023["TEAM_NAME"])
         print("bruh")
     except Exception as e:
         print(f"An error occurred: {e}")
