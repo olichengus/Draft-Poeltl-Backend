@@ -1,6 +1,9 @@
+from src.GuessScore import GuessScore
+
+
 class Player:
-    def __init__(self, name, d_year, d_round, d_pick, d_team, d_college, d_pos):
-        self.name = name
+    def __init__(self, ids, d_year, d_round, d_pick, d_team, d_college, d_pos):
+        self.id = ids
         self.d_year = d_year
         self.d_round = d_round
         self.d_pick = d_pick
@@ -8,8 +11,8 @@ class Player:
         self.d_college = d_college
         self.pos = d_pos
 
-    def get_name(self):
-        return self.name
+    def get_id(self):
+        return self.id
 
     def get_d_year(self):
         return self.d_year
@@ -23,5 +26,8 @@ class Player:
     def get_d_team(self):
         return self.d_team
 
-    def draftMatch(self, year, round, pick, team):
-        return year == self.d_year and round == self.d_round and pick == self.d_pick and team == self.d_team
+    # compares players and returns a guess score
+    def draft_match(self, player):
+        gs = GuessScore()
+        gs.get_scores(self,player)
+        return gs
