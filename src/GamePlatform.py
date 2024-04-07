@@ -1,6 +1,6 @@
 from nba_api.stats.static import players
 import random
-from src import GuessScore
+from src.GuessScore import GuessScore
 from src.Game_API.GameAPI import GameAPI
 from src.Player import Player
 
@@ -12,6 +12,7 @@ class GamePlatform:
         self.poeltlPlayer = None
         self.round = 0
         self.answerPlayers = []
+        self.guessScore = GuessScore()
 
     # finds new Poeltl player
     def set_new_player(self):
@@ -24,18 +25,18 @@ class GamePlatform:
     def set_new_player_not_random(self):
         return True
 
-    # receives player name and returns Guess Score based on how close the guess is
+    # receives player name and returns dict of GuessScore Results
     def submit_answer(self, player_name):
         player_search = players.find_players_by_full_name("player_name")
         if player_search == [] or len(player_search) > 1 or player_search[0]["active"] is False:
             raise Exception("No specific player found")
         player_id = player_search[0]["id"]
         player2 = self.gameAPI.make_player(player_id)
-        if self.poeltlPlayer is not Player:
+        if not isinstance(self.poeltlPlayer, Player):
             raise Exception("No player to guess")
         # make player by id
-        res = self.poeltlPlayer.draft_match(player2)
-        return res
+        res = self.guessScore.get_scores(self.poeltlPlayer, player2)
+        self.round += 1
 
     # resets game for another round of guessing
     def reset_game(self):
