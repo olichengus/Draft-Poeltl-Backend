@@ -27,16 +27,20 @@ class GamePlatform:
 
     # receives player name and returns dict of GuessScore Results
     def submit_answer(self, player_name):
-        player_search = players.find_players_by_full_name("player_name")
-        if player_search == [] or len(player_search) > 1 or player_search[0]["active"] is False:
-            raise Exception("No specific player found")
-        player_id = player_search[0]["id"]
-        player2 = self.gameAPI.make_player(player_id)
-        if not isinstance(self.poeltlPlayer, Player):
-            raise Exception("No player to guess")
-        # make player by id
-        res = self.guessScore.get_scores(self.poeltlPlayer, player2)
-        self.round += 1
+        try :
+            player_search = players.find_players_by_full_name("player_name")
+            if player_search == [] or len(player_search) > 1 or player_search[0]["active"] is False:
+                raise Exception("No specific player found")
+            player_id = player_search[0]["id"]
+            player2 = self.gameAPI.make_player(player_id)
+            if not isinstance(self.poeltlPlayer, Player):
+                raise Exception("No player to guess")
+            # make player by id
+            res = self.guessScore.get_scores(self.poeltlPlayer, player2)
+            self.round += 1
+            return res
+        except Exception as e:
+            print("an error occurred ", e)
 
     # resets game for another round of guessing
     def reset_game(self):

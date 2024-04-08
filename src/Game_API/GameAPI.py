@@ -2,6 +2,14 @@ from nba_api.stats.endpoints import playerindex
 from nba_api.stats.endpoints import drafthistory
 from src.Player import Player
 
+
+# given draft year, draft round and draft pick returns the team that made that pick
+def get_draft_team(y, r, p):
+    draft = drafthistory.DraftHistory(league_id="00", season_year_nullable=y, round_num_nullable=r,
+                                      overall_pick_nullable=p).get_data_frames()[0]
+    return draft["TEAM_NAME"]
+
+
 class GameAPI:
     def __init__(self):
         # calls API once and gets all necessary players
@@ -16,14 +24,8 @@ class GameAPI:
         p_pick = player_selection[0]["DRAFT_NUMBER"]
         p_college = player_selection[0]["COLLEGE"]
         p_pos = player_selection[0]["POSITION"]
-        p_team = self.get_draft_team(draft_year, p_round, p_pick)
+        p_team = get_draft_team(draft_year, p_round, p_pick)
         return Player(p_id, draft_year, p_round, p_pick, p_team, p_college, p_pos)
-
-    # given draft year, draft round and draft pick returns the team that made that pick
-    def get_draft_team(self, y, r, p):
-        draft = drafthistory.DraftHistory(league_id="00", season_year_nullable=y, round_num_nullable=r,
-                                          overall_pick_nullable=p).get_data_frames()[0]
-        return draft["TEAM_NAME"]
 
     # returns player given player_id
     def make_player(self, player_id):
@@ -33,5 +35,5 @@ class GameAPI:
         p_pick = player_df[0]["DRAFT_NUMBER"]
         p_college = player_df[0]["COLLEGE"]
         p_pos = player_df[0]["POSITION"]
-        p_team = self.get_draft_team(p_draft_year, p_round, p_pick)
+        p_team = get_draft_team(p_draft_year, p_round, p_pick)
         return Player(player_id,p_draft_year,p_round,p_pick,p_college,p_pos,p_team)
