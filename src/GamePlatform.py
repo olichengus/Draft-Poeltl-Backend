@@ -38,6 +38,7 @@ class GamePlatform:
             # make player by id
             res = self.guessScore.get_scores(self.poeltlPlayer, player2)
             self.round += 1
+            res['round'] = self.round
             return res
         except Exception as e:
             print("an error occurred ", e)
