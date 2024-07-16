@@ -1,7 +1,9 @@
 import unittest
 from enum import Enum
-from src.GuessScore import Status, Direction, GuessScore
-from src.Player import Player
+from backend.src.GuessScore import Status, Direction, GuessScore
+from backend.src.Player import Player
+from backend.src.GamePlatform import GamePlatform
+from backend.src.GamePlatform import find_lists_of_players_full_name
 
 
 class TestGuessScore(unittest.TestCase):
@@ -19,6 +21,13 @@ class TestGuessScore(unittest.TestCase):
         self.assertEqual(res['pos_score'], Status.GREEN)
         self.assertEqual(res['team_score'], Status.GREEN)
 
+    def test_submit_answer(self):
+        game = GamePlatform()
+        game.set_new_player()
+        test_player = "Jayson Tatum"
+        res = game.submit_answer(test_player, "Lebron James")
+        self.assertIsNotNone(res)
+
     def test_incorrect_guess(self):
         test_player = Player(2541, 2002,1,6,"Lakers","Kansas","SG")
         res = self.game.get_scores(self.playerPoetl, test_player)
@@ -30,6 +39,18 @@ class TestGuessScore(unittest.TestCase):
         self.assertEqual(self.game.pos_score, Status.GREY)
         self.assertEqual(self.game.year_dir, Direction.UP)
         self.assertEqual(self.game.pick_dir, Direction.DOWN)
+
+    def test_set_poetl_player(self):
+        gamePlatform = GamePlatform()
+        gamePlatform.set_new_player()
+        self.assertIsNotNone(gamePlatform.poeltlPlayer)
+
+    def test_list_players(self):
+        player_full_name = "vic"
+        res = find_lists_of_players_full_name(player_full_name)
+        res_active = [x for x in res if x["is_active"]]
+        res_full_names = [active_player['full_name'] for active_player in res_active]
+        print(res_full_names)
 
 
 if __name__ == '__main__':
