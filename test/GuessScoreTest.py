@@ -1,9 +1,9 @@
 import unittest
 from enum import Enum
-from backend.src.GuessScore import Status, Direction, GuessScore
-from backend.src.Player import Player
-from backend.src.GamePlatform import GamePlatform
-from backend.src.GamePlatform import find_lists_of_players_full_name
+from src.GuessScore import Status, Direction, GuessScore
+from src.Player import Player
+from src.GamePlatform import GamePlatform
+from src.GamePlatform import find_lists_of_players_full_name
 
 
 class TestGuessScore(unittest.TestCase):
@@ -24,8 +24,8 @@ class TestGuessScore(unittest.TestCase):
     def test_submit_answer(self):
         game = GamePlatform()
         game.set_new_player()
-        test_player = "Jayson Tatum"
-        res = game.submit_answer(test_player, "Lebron James")
+        test_player = "Donte DiVincenzo"
+        res = game.submit_answer(test_player, "Chris Duarte")
         self.assertIsNotNone(res)
 
     def test_incorrect_guess(self):
@@ -51,6 +51,8 @@ class TestGuessScore(unittest.TestCase):
         res_active = [x for x in res if x["is_active"]]
         res_full_names = [active_player['full_name'] for active_player in res_active]
         print(res_full_names)
+
+
 
 
 if __name__ == '__main__':

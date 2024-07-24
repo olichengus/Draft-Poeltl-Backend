@@ -24,16 +24,23 @@ class GameAPI:
         p_college = player_selection["COLLEGE"].values[0]
         p_pos = player_selection["POSITION"].values[0]
         p_team = get_draft_team(draft_year, p_round, p_pick)
-        print("buffer")
         return Player(p_id, draft_year, p_round, p_pick, p_team, p_college, p_pos)
 
     # returns player given player_id
     def make_player(self, player_id):
         player_df = self.players[self.players["PERSON_ID"] == player_id]
-        p_draft_year = int(player_df["DRAFT_YEAR"].values[0])
-        p_round = int(player_df["DRAFT_ROUND"].values[0])
-        p_pick = int(player_df["DRAFT_NUMBER"].values[0])
-        p_college = player_df["COLLEGE"].values[0]
-        p_pos = player_df["POSITION"].values[0]
-        p_team = get_draft_team(p_draft_year, p_round, p_pick)
-        return Player(player_id, p_draft_year, p_round, p_pick, p_team, p_college, p_pos)
+        if len(player_df) > 0:
+            try:
+                p_draft_year = int(player_df["DRAFT_YEAR"].values[0])
+                p_round = int(player_df["DRAFT_ROUND"].values[0])
+                p_pick = int(player_df["DRAFT_NUMBER"].values[0])
+            except ValueError:
+                print("Unable to parse value to integer.")
+                return
+            p_college = player_df["COLLEGE"].values[0]
+            p_pos = player_df["POSITION"].values[0]
+            p_team = get_draft_team(p_draft_year, p_round, p_pick)
+            return Player(player_id, p_draft_year, p_round, p_pick, p_team, p_college, p_pos)
+        else:
+            print(f"No player found with ID {player_id}.")
+            return "This player was not active in the 2023 season"
