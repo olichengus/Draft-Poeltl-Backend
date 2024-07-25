@@ -1,7 +1,7 @@
 from nba_api.stats.static import players
 import random
 from src.GuessScore import GuessScore
-from src.Game_API.GameAPI import GameAPI
+from src.Game_API.GameAPI import GameAPI, MyException
 
 
 def find_lists_of_players_full_name(player_name):
@@ -48,9 +48,8 @@ class GamePlatform:
             player_dict = guess_player.get_player_dict()
             merge_res = {**res, **player_dict}
             return merge_res
-        except Exception as e:
-            print(e)
-            return "Error occurred"
+        except MyException as e:
+            return str(e)
 
     # resets game for another round of guessing
     def reset_game(self):

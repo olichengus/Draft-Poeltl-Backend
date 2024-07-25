@@ -3,9 +3,14 @@ from nba_api.stats.endpoints import drafthistory
 from src.Player import Player
 
 
+class MyException(Exception):
+    pass
+
+
 # given draft year, draft round and draft pick returns the team that made that pick
 def get_draft_team(y, r, p):
-    draft = drafthistory.DraftHistory(league_id="00", season_year_nullable=y, round_num_nullable=r, overall_pick_nullable=p).get_data_frames()[0]
+    draft = drafthistory.DraftHistory(league_id="00", season_year_nullable=y, round_num_nullable=r,
+                                      overall_pick_nullable=p).get_data_frames()[0]
     return draft["TEAM_NAME"][0]
 
 
@@ -35,12 +40,12 @@ class GameAPI:
                 p_round = int(player_df["DRAFT_ROUND"].values[0])
                 p_pick = int(player_df["DRAFT_NUMBER"].values[0])
             except ValueError:
-                print("Unable to parse value to integer.")
-                return
+                print("This player was undrafted")
+                raise MyException("This player was undrafted")
             p_college = player_df["COLLEGE"].values[0]
             p_pos = player_df["POSITION"].values[0]
             p_team = get_draft_team(p_draft_year, p_round, p_pick)
             return Player(player_id, p_draft_year, p_round, p_pick, p_team, p_college, p_pos)
         else:
             print(f"No player found with ID {player_id}.")
-            return "This player was not active in the 2023 season"
+            raise MyException("This player was not active in the 2023/24 season")
