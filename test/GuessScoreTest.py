@@ -1,5 +1,4 @@
 import unittest
-from enum import Enum
 from src.GuessScore import Status, Direction, GuessScore
 from src.Player import Player
 from src.GamePlatform import GamePlatform
