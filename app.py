@@ -15,7 +15,7 @@ app.config['DEBUG'] = os.environ.get('FLASK_DEBUG')
 api = GameAPI()
 game = GamePlatform()
 
-@app.route('/get_players', methods=['GET'])
+@app.route('/api/get_players', methods=['GET'])
 def get_players():
     if request.method == 'GET':
         player_full_name = request.args.get('player_full_name')
@@ -27,7 +27,7 @@ def get_players():
         }), 200
 
 
-@app.route('/guess_player', methods=['POST'])
+@app.route('/api/guess_player', methods=['POST'])
 def guess_player():
     if request.method == 'POST':
         data = request.get_json()
@@ -71,7 +71,7 @@ def guess_player():
         })
 
 
-@app.route('/get_poeltl_player', methods=['GET'])
+@app.route('/api/get_poeltl_player', methods=['GET'])
 def get_poeltl_player():
     game.set_new_player()
     name = game.get_poeltl_player_name()
