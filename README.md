@@ -2,6 +2,6 @@ This is my backend server I developed for my NBA Guessing Game (Draft Edition) a
 
 Here are the steps to run the server locally: 
 
-Starting virtual environment: source venv/bin/activate
-Download all required packages: pip install -r requirements.txt  
-Start server: python app.py
+* Starting virtual environment: source venv/bin/activate
+* Download all required packages: pip install -r requirements.txt  
+* Start server: python app.py
