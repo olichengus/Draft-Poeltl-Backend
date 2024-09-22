@@ -37,7 +37,7 @@ class GuessScore:
             self.calculate_year_scores(player1.d_year, player2.d_year)
             self.calculate_round_scores(player1.d_round, player2.d_round)
             self.calculate_pick_scores(player1.d_pick, player2.d_pick)
-            self.calculate_col_scores(player1.d_college, player2.d_college)
+            self.calculate_col_scores(player1.d_col, player2.d_col)
             self.calculate_pos_scores(player1.pos, player2.pos)
             self.calculate_team_scores(player1.d_team, player2.d_team)
         return self.make_result_dict()
@@ -97,8 +97,10 @@ class GuessScore:
         return True
 
     def calculate_col_scores(self, col1, col2):
-        if col1 == col2:
+        if col1.name == col2.name:
             self.col_score = Status.GREEN
+        elif col1.type == col2.type:
+            self.col_score = Status.YELLOW
         else:
             self.col_score = Status.GREY
 
@@ -109,11 +111,16 @@ class GuessScore:
             self.pos_score = Status.GREY
 
     def calculate_team_scores(self, team1, team2):
-        if team1 == team2:
-            self.team_score = Status.GREEN
-        else:
-            self.team_score = Status.GREY
-        return True
+        try:
+            if team1.name == team2.name:
+                self.team_score = Status.GREEN
+            elif team1.division == team2.division:
+                self.team_score = Status.YELLOW
+            else:
+                self.team_score = Status.GREY
+            return True
+        except Exception as e:
+            return False
 
 
 
