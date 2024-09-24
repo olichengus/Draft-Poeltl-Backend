@@ -27,6 +27,8 @@ class TestGuessScore(unittest.TestCase):
         game.set_new_player()
         test_player = "Victor Wembanyama"
         res = game.submit_answer(test_player, "Chris Duarte")
+        college = res["d_col"].name
+        team = res["d_team"].name
         self.assertIsNotNone(res)
 
     def test_incorrect_guess(self):

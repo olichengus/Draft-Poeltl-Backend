@@ -56,11 +56,11 @@ def guess_player():
                     "dir": res["pick_dir"].name,
                 },
                 "college": {
-                    "value": res["d_col"]["name"],
+                    "value": res["d_col"].name,
                     "score": res["col_score"].name,
                 },
                 "team": {
-                    "value": res["d_team"]["name"],
+                    "value": res["d_team"].name,
                     "score": res["team_score"].name,
                 },
                 "position": {
