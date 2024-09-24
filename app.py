@@ -78,7 +78,7 @@ def get_poeltl_player():
     college = game.get_poeltl_player_college()
     return jsonify({
         "name": name,
-        "college": college,
+        "college": college.name,
     }), 200
 
 

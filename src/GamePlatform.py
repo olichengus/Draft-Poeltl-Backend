@@ -29,7 +29,7 @@ class GamePlatform:
 
     def get_poeltl_player_college(self):
         if self.poeltlPlayer is not None:
-            return self.poeltlPlayer.d_college
+            return self.poeltlPlayer.d_col
 
     def get_poeltl_player_name(self):
         player_name = players.find_player_by_id(self.poeltlPlayer.id)
