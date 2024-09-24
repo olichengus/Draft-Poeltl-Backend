@@ -25,12 +25,12 @@ class TestGuessScore(unittest.TestCase):
     def test_submit_answer(self):
         game = GamePlatform()
         game.set_new_player()
-        test_player = "Donte DiVincenzo"
+        test_player = "Victor Wembanyama"
         res = game.submit_answer(test_player, "Chris Duarte")
         self.assertIsNotNone(res)
 
     def test_incorrect_guess(self):
-        test_player = Player(2541, 2002,1,6,"Lakers","Kansas","SG")
+        test_player = Player(2541, 2002,1,6,"SF")
         res = self.game.get_scores(self.playerPoeltl, test_player)
         self.assertEqual(self.game.year_score, Status.YELLOW)
         self.assertEqual(self.game.round_score, Status.GREEN)
